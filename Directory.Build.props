@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
+  <PropertyGroup>
+    <DisableArcade>1</DisableArcade>
+  </PropertyGroup>
+
   <Import Project="Sdk.props" 
           Sdk="Microsoft.DotNet.Arcade.Sdk" 
           Condition="'$(DisableArcade)' != '1'" />
@@ -8,7 +12,8 @@
     <NoWarn>$(NoWarn);NU5125;CS0618</NoWarn>
     <NoWarn Condition=" '$(DotnetBuildFromSource)' == 'true' ">$(NoWarn);CS8714;CS8765;CS8600;CS8601;CS8602;CS8603;CS8604</NoWarn>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <LangVersion>10.0</LangVersion>
+    <LangVersion>latest</LangVersion>
+    <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(DotNetBuildFromSource)' == 'true'">
