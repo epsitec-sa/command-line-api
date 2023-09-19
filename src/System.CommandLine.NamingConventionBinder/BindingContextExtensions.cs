@@ -17,6 +17,11 @@ public static class BindingContextExtensions
         public override Task<int> InvokeAsync(ParseResult parseResult, CancellationToken cancellationToken = default) => Task.FromResult(0);
     }
 
+    /// <summary>
+    /// <inheritdoc cref="BindingHandler.GetBindingContext(ParseResult)"/>
+    /// </summary>
+    /// <param name="parseResult"></param>
+    /// <returns></returns>
     public static BindingContext GetBindingContext(this ParseResult parseResult)
     {
         // parsing resulted with no handler or it was not created yet, we fake it to just store the BindingContext between the calls

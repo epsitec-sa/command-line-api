@@ -6,6 +6,9 @@ using System.CommandLine.Invocation;
 
 namespace System.CommandLine.NamingConventionBinder
 {
+    /// <summary>
+    /// <inheritdoc cref="AsynchronousCliAction"/>
+    /// </summary>
     public abstract class BindingHandler : AsynchronousCliAction
     {
         private BindingContext? _bindingContext;
