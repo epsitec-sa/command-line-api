@@ -19,6 +19,7 @@ namespace System.CommandLine.Parsing
         private CommandResult _innermostCommandResult;
         private bool _isHelpRequested;
         private bool _isTerminatingDirectiveSpecified;
+        private bool _isDoubleDashSpecified;
         private CliAction? _primaryAction;
         private List<CliAction>? _preActions;
 
@@ -49,6 +50,10 @@ namespace System.CommandLine.Parsing
         {
             bool result = _index < _tokens.Count;
             currentTokenType = result ? _tokens[_index].Type : (CliTokenType)(-1);
+            if (currentTokenType is CliTokenType.DoubleDash)
+            {
+                _isDoubleDashSpecified = true;
+            }
             return result;
         }
 
@@ -107,7 +112,12 @@ namespace System.CommandLine.Parsing
 
             while (More(out CliTokenType currentTokenType))
             {
-                if (currentTokenType == CliTokenType.Command)
+                if (_isDoubleDashSpecified)
+                {
+                    AddCurrentTokenToUnmatched();
+                    Advance();
+                }
+                else if (currentTokenType == CliTokenType.Command)
                 {
                     ParseSubcommand();
                 }
