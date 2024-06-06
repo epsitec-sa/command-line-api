@@ -57,8 +57,15 @@ namespace System.CommandLine.Parsing
             return result;
         }
 
+        private void OnCommandParsing()
+        {
+            _innermostCommandResult.Command.OnParsing(_innermostCommandResult);
+        }
+
         internal ParseResult Parse()
         {
+            OnCommandParsing();
+
             ParseDirectives();
 
             ParseCommandChildren();
@@ -99,6 +106,8 @@ namespace System.CommandLine.Parsing
                 _innermostCommandResult);
 
             _symbolResultTree.Add(command, _innermostCommandResult);
+
+            OnCommandParsing();
 
             Advance();
 

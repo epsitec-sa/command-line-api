@@ -309,5 +309,11 @@ namespace System.CommandLine
 
         internal bool EqualsNameOrAlias(string name)
             => Name.Equals(name, StringComparison.Ordinal) || (_aliases is not null && _aliases.Contains(name));
+
+        /// <summary>
+        /// Allows the caller to change the properties of the command before starting parsing.
+        /// </summary>
+        /// <param name="commandResult">The parsing status prior to starting.</param>
+        protected internal virtual void OnParsing(CommandResult commandResult) { }
     }
 }
