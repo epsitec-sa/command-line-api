@@ -121,7 +121,7 @@ namespace System.CommandLine.Parsing
 
             while (More(out CliTokenType currentTokenType))
             {
-                if (_isDoubleDashSpecified)
+                if (_isDoubleDashSpecified && _innermostCommandResult.Command.TreatDoubleDashTokensAsUnmatched)
                 {
                     AddCurrentTokenToUnmatched();
                     Advance();

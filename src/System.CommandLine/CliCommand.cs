@@ -182,10 +182,25 @@ namespace System.CommandLine
         public void Add(CliCommand command) =>  Subcommands.Add(command);
 
         /// <summary>
+        /// Enable double dash (--) greedy parsing mode (consider all tokens after a double dash as unmatched).<br/>
+        /// Unmatched tokens are available after parsing in <see cref="ParseResult.UnmatchedTokens"/>.
+        /// </summary>
+        public void EnableDoubleDashGreedyMode()
+        {
+            TreatDoubleDashTokensAsUnmatched = true;
+            TreatUnmatchedTokensAsErrors = false;
+        }
+
+        /// <summary>
         /// Gets or sets a value that indicates whether unmatched tokens should be treated as errors. For example,
         /// if set to <see langword="true"/> and an extra command or argument is provided, validation will fail.
         /// </summary>
         public bool TreatUnmatchedTokensAsErrors { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether tokens after a double dash should be considered as unmatched.
+        /// </summary>
+        internal bool TreatDoubleDashTokensAsUnmatched { get; set; } = false;
 
         /// <inheritdoc />
         [DebuggerStepThrough]
@@ -311,7 +326,7 @@ namespace System.CommandLine
             => Name.Equals(name, StringComparison.Ordinal) || (_aliases is not null && _aliases.Contains(name));
 
         /// <summary>
-        /// Allows the caller to change the properties of the command before starting parsing.
+        /// Allows the caller to configure this command before starting parsing.
         /// </summary>
         /// <param name="commandResult">The parsing status prior to starting.</param>
         protected internal virtual void OnParsing(CommandResult commandResult) { }
