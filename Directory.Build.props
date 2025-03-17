@@ -1,25 +1,8 @@
 <Project>
-  <PropertyGroup>
-    <DisableArcade>1</DisableArcade>
-  </PropertyGroup>
-
-  <Import Project="Sdk.props" 
-          Sdk="Microsoft.DotNet.Arcade.Sdk" 
-          Condition="'$(DisableArcade)' != '1'" />
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('$(MSBuildThisFile)', '$(MSBuildThisFileDirectory)../'))" />
 
   <PropertyGroup>
-    <NoWarn>$(NoWarn);NU5125;CS0618</NoWarn>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <LangVersion>latest</LangVersion>
-    <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(DotNetBuildFromSource)' == 'true' or '$(DotNetBuildSourceOnly)' == 'true'">
-    <TargetFrameworkForNETSDK>$(NetCurrent)</TargetFrameworkForNETSDK>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(DotNetBuildFromSource)' != 'true' and '$(DotNetBuildSourceOnly)' != 'true'">
-    <TargetFrameworkForNETSDK>net9.0</TargetFrameworkForNETSDK>
+    <TargetFrameworkForNETSDK>$(CoreTargetFramework)</TargetFrameworkForNETSDK>
   </PropertyGroup>
 
 </Project>

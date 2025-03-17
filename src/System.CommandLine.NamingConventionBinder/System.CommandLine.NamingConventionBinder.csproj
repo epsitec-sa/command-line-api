@@ -3,8 +3,6 @@
   <PropertyGroup>
     <IsPackable>true</IsPackable>
     <PackageId>System.CommandLine.NamingConventionBinder</PackageId>
-    <TargetFrameworks>$(TargetFrameworkForNETSDK);netstandard2.0</TargetFrameworks>
-    <LangVersion>10</LangVersion>
     <Nullable>enable</Nullable>
     <Description>This package provides command handler support for System.CommandLine performs parameter and model binding by matching option and argument names to parameter and property names.</Description>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
