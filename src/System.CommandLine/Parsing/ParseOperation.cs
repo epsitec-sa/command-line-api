@@ -9,8 +9,8 @@ namespace System.CommandLine.Parsing
 {
     internal sealed class ParseOperation
     {
-        private readonly List<CliToken> _tokens;
-        private readonly CliConfiguration _configuration;
+        private readonly List<Token> _tokens;
+        private readonly CommandLineConfiguration _configuration;
         private readonly string? _rawInput;
         private readonly SymbolResultTree _symbolResultTree;
         private readonly CommandResult _rootCommandResult;
@@ -20,12 +20,12 @@ namespace System.CommandLine.Parsing
         private bool _isHelpRequested;
         private bool _isTerminatingDirectiveSpecified;
         private bool _isDoubleDashSpecified;
-        private CliAction? _primaryAction;
-        private List<CliAction>? _preActions;
+        private CommandLineAction? _primaryAction;
+        private List<CommandLineAction>? _preActions;
 
         public ParseOperation(
-            List<CliToken> tokens,
-            CliConfiguration configuration,
+            List<Token> tokens,
+            CommandLineConfiguration configuration,
             List<string>? tokenizeErrors,
             string? rawInput)
         {
@@ -42,15 +42,15 @@ namespace System.CommandLine.Parsing
             Advance();
         }
 
-        private CliToken CurrentToken => _tokens[_index];
+        private Token CurrentToken => _tokens[_index];
 
         private void Advance() => _index++;
 
-        private bool More(out CliTokenType currentTokenType)
+        private bool More(out TokenType currentTokenType)
         {
             bool result = _index < _tokens.Count;
-            currentTokenType = result ? _tokens[_index].Type : (CliTokenType)(-1);
-            if (currentTokenType is CliTokenType.DoubleDash)
+            currentTokenType = result ? _tokens[_index].Type : (TokenType)(-1);
+            if (currentTokenType is TokenType.DoubleDash)
             {
                 _isDoubleDashSpecified = true;
             }
@@ -97,7 +97,7 @@ namespace System.CommandLine.Parsing
 
         private void ParseSubcommand()
         {
-            CliCommand command = (CliCommand)CurrentToken.Symbol!;
+            Command command = (Command)CurrentToken.Symbol!;
 
             _innermostCommandResult = new CommandResult(
                 command,
@@ -119,22 +119,22 @@ namespace System.CommandLine.Parsing
             int currentArgumentCount = 0;
             int currentArgumentIndex = 0;
 
-            while (More(out CliTokenType currentTokenType))
+            while (More(out TokenType currentTokenType))
             {
                 if (_isDoubleDashSpecified && _innermostCommandResult.Command.TreatDoubleDashTokensAsUnmatched)
                 {
                     AddCurrentTokenToUnmatched();
                     Advance();
                 }
-                else if (currentTokenType == CliTokenType.Command)
+                if (currentTokenType == TokenType.Command)
                 {
                     ParseSubcommand();
                 }
-                else if (currentTokenType == CliTokenType.Option)
+                else if (currentTokenType == TokenType.Option)
                 {
                     ParseOption();
                 }
-                else if (currentTokenType == CliTokenType.Argument)
+                else if (currentTokenType == TokenType.Argument)
                 {
                     ParseCommandArguments(ref currentArgumentCount, ref currentArgumentIndex);
                 }
@@ -148,11 +148,11 @@ namespace System.CommandLine.Parsing
 
         private void ParseCommandArguments(ref int currentArgumentCount, ref int currentArgumentIndex)
         {
-            while (More(out CliTokenType currentTokenType) && currentTokenType == CliTokenType.Argument)
+            while (More(out TokenType currentTokenType) && currentTokenType == TokenType.Argument)
             {
                 while (_innermostCommandResult.Command.HasArguments && currentArgumentIndex < _innermostCommandResult.Command.Arguments.Count)
                 {
-                    CliArgument argument = _innermostCommandResult.Command.Arguments[currentArgumentIndex];
+                    Argument argument = _innermostCommandResult.Command.Arguments[currentArgumentIndex];
 
                     if (currentArgumentCount < argument.Arity.MaximumNumberOfValues)
                     {
@@ -200,7 +200,7 @@ namespace System.CommandLine.Parsing
 
         private void ParseOption()
         {
-            CliOption option = (CliOption)CurrentToken.Symbol!;
+            Option option = (Option)CurrentToken.Symbol!;
             OptionResult optionResult;
 
             if (!_symbolResultTree.TryGetValue(option, out SymbolResult? symbolResult))
@@ -253,7 +253,7 @@ namespace System.CommandLine.Parsing
             var contiguousTokens = 0;
             int argumentCount = 0;
 
-            while (More(out CliTokenType currentTokenType) && currentTokenType == CliTokenType.Argument)
+            while (More(out TokenType currentTokenType) && currentTokenType == TokenType.Argument)
             {
                 if (argumentCount >= argument.Arity.MaximumNumberOfValues)
                 {
@@ -311,7 +311,7 @@ namespace System.CommandLine.Parsing
 
         private void ParseDirectives()
         {
-            while (More(out CliTokenType currentTokenType) && currentTokenType == CliTokenType.Directive)
+            while (More(out TokenType currentTokenType) && currentTokenType == TokenType.Directive)
             {
                 if (_configuration.HasDirectives)
                 {
@@ -325,7 +325,7 @@ namespace System.CommandLine.Parsing
             {
                 var token = CurrentToken;
 
-                if (token.Symbol is not CliDirective directive)
+                if (token.Symbol is not Directive directive)
                 {
                     AddCurrentTokenToUnmatched();
                     return;
@@ -365,7 +365,7 @@ namespace System.CommandLine.Parsing
             }
         }
 
-        private void AddPreAction(CliAction action)
+        private void AddPreAction(CommandLineAction action)
         {
             if (_preActions is null)
             {
@@ -377,7 +377,7 @@ namespace System.CommandLine.Parsing
 
         private void AddCurrentTokenToUnmatched()
         {
-            if (CurrentToken.Type == CliTokenType.DoubleDash)
+            if (CurrentToken.Type == TokenType.DoubleDash)
             {
                 return;
             }

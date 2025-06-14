@@ -18,10 +18,10 @@ public static class BindingContextExtensions
     }
 
     /// <summary>
-    /// <inheritdoc cref="BindingHandler.GetBindingContext(ParseResult)"/>
+    /// Gets the binding context for the specified parse result.
     /// </summary>
-    /// <param name="parseResult"></param>
-    /// <returns></returns>
+    /// <param name="parseResult">The parse result from the command line parsing.</param>
+    /// <returns>The binding context associated with the parse result.</returns>
     public static BindingContext GetBindingContext(this ParseResult parseResult)
     {
         // parsing resulted with no handler or it was not created yet, we fake it to just store the BindingContext between the calls

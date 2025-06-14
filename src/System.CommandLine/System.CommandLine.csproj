@@ -4,7 +4,6 @@
     <IsPackable>true</IsPackable>
     <PackageId>System.CommandLine</PackageId>
     <Nullable>enable</Nullable>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Description>Support for parsing command lines, supporting both POSIX and Windows conventions and shell-agnostic command line completions.</Description>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>

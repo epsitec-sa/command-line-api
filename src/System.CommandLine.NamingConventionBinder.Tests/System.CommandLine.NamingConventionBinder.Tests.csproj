@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-    <TargetFrameworks>$(TargetFrameworkForNETSDK);net462</TargetFrameworks>
+    <TargetFrameworks>$(TargetFrameworkForNETSDK);$(NetFrameworkCurrent)</TargetFrameworks>
     <LangVersion>10</LangVersion>
   </PropertyGroup>
 
@@ -19,7 +19,7 @@
   
   <ItemGroup>
     <PackageReference Include="ApprovalTests" />
-    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="AwesomeAssertions" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="Microsoft.DotNet.PlatformAbstractions" />
   </ItemGroup>

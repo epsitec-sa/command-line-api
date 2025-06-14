@@ -7,9 +7,12 @@ using System.CommandLine.Invocation;
 namespace System.CommandLine.NamingConventionBinder
 {
     /// <summary>
-    /// <inheritdoc cref="AsynchronousCliAction"/>
+    /// Represents a handler that provides binding functionality for command-line actions.
     /// </summary>
-    public abstract class BindingHandler : AsynchronousCliAction
+    /// <remarks>This abstract class serves as a base for implementing custom binding logic in command-line
+    /// applications. It provides a mechanism to retrieve or initialize a <see cref="BindingContext"/> for the current
+    /// invocation.</remarks>
+    public abstract class BindingHandler : AsynchronousCommandLineAction
     {
         private BindingContext? _bindingContext;
 
