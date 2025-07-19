@@ -10,7 +10,7 @@ namespace System.CommandLine.Parsing
     internal sealed class ParseOperation
     {
         private readonly List<Token> _tokens;
-        private readonly CommandLineConfiguration _configuration;
+        private readonly ParserConfiguration _configuration;
         private readonly string? _rawInput;
         private readonly SymbolResultTree _symbolResultTree;
         private readonly CommandResult _rootCommandResult;
@@ -22,22 +22,25 @@ namespace System.CommandLine.Parsing
         private bool _isDoubleDashSpecified;
         private CommandLineAction? _primaryAction;
         private List<CommandLineAction>? _preActions;
+        private readonly Command _rootCommand;
 
         public ParseOperation(
             List<Token> tokens,
-            CommandLineConfiguration configuration,
+            Command rootCommand,
+            ParserConfiguration configuration,
             List<string>? tokenizeErrors,
             string? rawInput)
         {
             _tokens = tokens;
             _configuration = configuration;
+            _rootCommand = rootCommand;
             _rawInput = rawInput;
-            _symbolResultTree = new(_configuration.RootCommand, tokenizeErrors);
+            _symbolResultTree = new(_rootCommand, tokenizeErrors);
             _innermostCommandResult = _rootCommandResult = new CommandResult(
-                _configuration.RootCommand,
+                _rootCommand,
                 CurrentToken,
                 _symbolResultTree);
-            _symbolResultTree.Add(_configuration.RootCommand, _rootCommandResult);
+            _symbolResultTree.Add(_rootCommand, _rootCommandResult);
 
             Advance();
         }
@@ -70,9 +73,12 @@ namespace System.CommandLine.Parsing
 
             ParseCommandChildren();
 
-            if (!_isHelpRequested)
+            ValidateAndAddDefaultResults();
+
+
+            if (_isHelpRequested)
             {
-                Validate();
+                _symbolResultTree.Errors?.Clear();
             }
 
             if (_primaryAction is null)
@@ -313,7 +319,7 @@ namespace System.CommandLine.Parsing
         {
             while (More(out TokenType currentTokenType) && currentTokenType == TokenType.Directive)
             {
-                if (_configuration.HasDirectives)
+                if (_rootCommand is RootCommand { Directives.Count: > 0 })
                 {
                     ParseDirective(); // kept in separate method to avoid JIT
                 }
@@ -385,18 +391,25 @@ namespace System.CommandLine.Parsing
             _symbolResultTree.AddUnmatchedToken(CurrentToken, _innermostCommandResult, _rootCommandResult);
         }
 
-        private void Validate()
+        private void ValidateAndAddDefaultResults()
         {
-            // Only the inner most command goes through complete validation,
+            // Only the innermost command goes through complete validation,
             // for other commands only a subset of options is checked.
-            _innermostCommandResult.Validate(completeValidation: true);
+            _innermostCommandResult.Validate(isInnermostCommand: true);
 
             CommandResult? currentResult = _innermostCommandResult.Parent as CommandResult;
             while (currentResult is not null)
             {
-                currentResult.Validate(completeValidation: false);
+                currentResult.Validate(isInnermostCommand: false);
 
                 currentResult = currentResult.Parent as CommandResult;
+            }
+
+            if (_primaryAction is null &&
+                _innermostCommandResult is { Command: { Action: null, HasSubcommands: true } })
+            {
+                _symbolResultTree.InsertFirstError(
+                    new ParseError(LocalizationResources.RequiredCommandWasNotProvided(), _innermostCommandResult));
             }
         }
     }
