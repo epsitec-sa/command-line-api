@@ -46,6 +46,7 @@ namespace System.CommandLine.Help
 
         internal override Argument Argument => Argument.None;
 
+        /// <inheritdoc />
         public override Type ValueType => typeof(void);
     }
 }

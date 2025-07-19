@@ -41,6 +41,12 @@ public partial class HelpBuilder
             };
         }
 
+        /// <summary>
+        /// Determines whether the default value for the specified symbol should be displayed.
+        /// </summary>
+        /// <param name="symbol">The symbol to evaluate. This can be an <see cref="Option"/> or an <see cref="Argument"/>.</param>
+        /// <returns><see langword="true"/> if the default value for the symbol should be displayed; otherwise, <see
+        /// langword="false"/>.</returns>
         public static bool ShouldShowDefaultValue(Symbol symbol) =>
             symbol switch
             {
@@ -49,10 +55,22 @@ public partial class HelpBuilder
                 _ => false
             };
 
+        /// <summary>
+        /// Determines whether the default value for the specified option should be displayed.
+        /// </summary>
+        /// <param name="option">The option to evaluate.</param>
+        /// <returns><see langword="true"/> if the default value for the option should be displayed; otherwise, <see
+        /// langword="false"/>.</returns>
         public static bool ShouldShowDefaultValue(Option option) =>
             option.HasDefaultValue && 
             !(option.ValueType == typeof(bool) || option.ValueType == typeof(bool?));
 
+        /// <summary>
+        /// Determines whether the default value for the specified argument should be displayed.
+        /// </summary>
+        /// <param name="argument">The argument to evaluate.</param>
+        /// <returns><see langword="true"/> if the default value for the argument should be displayed; otherwise, <see
+        /// langword="false"/>.</returns>
         public static bool ShouldShowDefaultValue(Argument argument) =>
             argument.HasDefaultValue && 
             !(argument.ValueType == typeof(bool) || argument.ValueType == typeof(bool?));

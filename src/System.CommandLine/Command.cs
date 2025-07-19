@@ -350,9 +350,15 @@ namespace System.CommandLine
             => Name.Equals(name, StringComparison.Ordinal) || (_aliases is not null && _aliases.Contains(name));
 
         /// <summary>
-        /// Allows the caller to configure this command before starting parsing.
+        /// Allows the caller to configure this command before parsing.
         /// </summary>
-        /// <param name="commandResult">The parsing status prior to starting.</param>
+        /// <param name="commandResult">The parsing status before parsing.</param>
         protected internal virtual void OnParsing(CommandResult commandResult) { }
+
+        /// <summary>
+        /// Allows the caller to configure this command after parsing.
+        /// </summary>
+        /// <param name="commandResult">The parsing status after parsing.</param>
+        protected internal virtual void OnParsed(CommandResult commandResult) { }
     }
 }

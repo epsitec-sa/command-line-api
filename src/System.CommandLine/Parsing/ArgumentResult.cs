@@ -29,6 +29,9 @@ namespace System.CommandLine.Parsing
 
         internal bool ArgumentLimitReached => Argument.Arity.MaximumNumberOfValues == (_tokens?.Count ?? 0);
 
+        /// <summary>
+        /// Gets a value indicating whether implicit behavior is enabled.
+        /// </summary>
         public bool Implicit { get; private set; }
 
         internal ArgumentConversionResult GetArgumentConversionResult() =>

@@ -64,6 +64,10 @@ namespace System.CommandLine.Parsing
         {
             _innermostCommandResult.Command.OnParsing(_innermostCommandResult);
         }
+        private void OnCommandParsed()
+        {
+            _innermostCommandResult.Command.OnParsed(_innermostCommandResult);
+        }
 
         internal ParseResult Parse()
         {
@@ -75,6 +79,7 @@ namespace System.CommandLine.Parsing
 
             ValidateAndAddDefaultResults();
 
+            OnCommandParsed();
 
             if (_isHelpRequested)
             {
@@ -118,6 +123,8 @@ namespace System.CommandLine.Parsing
             Advance();
 
             ParseCommandChildren();
+
+            OnCommandParsed();
         }
 
         private void ParseCommandChildren()

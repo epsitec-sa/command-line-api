@@ -4,6 +4,13 @@ using System.Threading;
 
 namespace System.CommandLine;
 
+/// <summary>
+/// Represents configuration settings for invoking a command-line action, including exception handling,  process
+/// termination signaling, and output/error stream management.
+/// </summary>
+/// <remarks>This class provides options to customize the behavior of command-line invocation, such as enabling 
+/// default exception handling, managing process termination timeouts, and redirecting standard output  and error
+/// streams. It is designed to facilitate robust and testable command-line application execution.</remarks>
 public class InvocationConfiguration
 {
     private TextWriter? _output, _error;
