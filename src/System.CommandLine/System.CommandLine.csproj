@@ -1,12 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <NetMinimum>net9.0</NetMinimum>
     <TargetFrameworks>$(NetMinimum);netstandard2.0</TargetFrameworks>
     <IsPackable>true</IsPackable>
     <Nullable>enable</Nullable>
     <Description>Support for parsing command lines, supporting both POSIX and Windows conventions and shell-agnostic command line completions.</Description>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DebugType Condition="'$(Configuration)' == 'Debug'">portable</DebugType>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == '$(NetMinimum)'">
