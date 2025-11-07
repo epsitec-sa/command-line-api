@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <NetMinimum>net9.0</NetMinimum>
     <TargetFrameworks>$(NetMinimum);netstandard2.0</TargetFrameworks>
     <IsPackable>true</IsPackable>
     <Nullable>enable</Nullable>
@@ -8,6 +9,8 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DebugType Condition="'$(Configuration)' == 'Debug'">portable</DebugType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <!-- warning CS1591: Missing XML comment for publicly visible type or member -->
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == '$(NetMinimum)'">
