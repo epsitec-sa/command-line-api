@@ -268,10 +268,9 @@ namespace System.CommandLine
                 if (HasSubcommands)
                 {
                     var commands = Subcommands;
-                    var textToMatchIsCommandName = context.ParseResult.CommandResult.Command.Name.IndexOfCaseInsensitive(textToMatch) >= 0;
                     for (int i = 0; i < commands.Count; i++)
                     {
-                        AddCompletionsFor(commands[i], commands[i]._aliases, textToMatchIsCommandName ? null : textToMatch);
+                        AddCompletionsFor(commands[i], commands[i]._aliases);
                     }
                 }
 
@@ -280,7 +279,7 @@ namespace System.CommandLine
                     var options = Options;
                     for (int i = 0; i < options.Count; i++)
                     {
-                        AddCompletionsFor(options[i], options[i]._aliases, textToMatch);
+                        AddCompletionsFor(options[i], options[i]._aliases);
                     }
                 }
 
@@ -315,7 +314,7 @@ namespace System.CommandLine
 
                                 if (option.Recursive)
                                 {
-                                    AddCompletionsFor(option, option._aliases, textToMatch);
+                                    AddCompletionsFor(option, option._aliases);
                                 }
                             }
                         }
@@ -332,11 +331,11 @@ namespace System.CommandLine
                    .OrderBy(item => item.SortText.IndexOfCaseInsensitive(context.WordToComplete))
                    .ThenBy(symbol => symbol.Label, StringComparer.OrdinalIgnoreCase);
 
-            void AddCompletionsFor(Symbol identifier, AliasSet? aliases, string? textToMatch)
+            void AddCompletionsFor(Symbol identifier, AliasSet? aliases)
             {
                 if (!identifier.Hidden)
                 {
-                    if (textToMatch is null || identifier.Name.ContainsCaseInsensitive(textToMatch))
+                    if (identifier.Name.ContainsCaseInsensitive(textToMatch))
                     {
                         completions.Add(new CompletionItem(identifier.Name, CompletionItem.KindKeyword, detail: identifier.Description));
                     }
@@ -345,7 +344,7 @@ namespace System.CommandLine
                     {
                         foreach (string alias in aliases)
                         {
-                            if (textToMatch is null || alias.ContainsCaseInsensitive(textToMatch))
+                            if (alias.ContainsCaseInsensitive(textToMatch))
                             {
                                 completions.Add(new CompletionItem(alias, CompletionItem.KindKeyword, detail: identifier.Description));
                             }
