@@ -3,6 +3,7 @@
 
   <PropertyGroup>
     <TargetFrameworkForNETSDK>$(CoreTargetFramework)</TargetFrameworkForNETSDK>
+    <NetMinimum>net9.0</NetMinimum>
   </PropertyGroup>
 
 </Project>
