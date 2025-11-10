@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.CommandLine.Completions;
-using FluentAssertions;
+using AwesomeAssertions;
 using Xunit;
 
 namespace System.CommandLine.Tests

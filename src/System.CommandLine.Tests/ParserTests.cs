@@ -1,14 +1,14 @@
-﻿// Copyright (c) .NET Foundation and contributors. All rights reserved.
+// Copyright (c) .NET Foundation and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
 using System.CommandLine.Parsing;
 using System.CommandLine.Tests.Utility;
 using System.IO;
-using FluentAssertions;
-using FluentAssertions.Equivalency;
+using AwesomeAssertions;
+using AwesomeAssertions.Equivalency;
 using System.Linq;
-using FluentAssertions.Common;
+using AwesomeAssertions.Common;
 using Xunit;
 
 namespace System.CommandLine.Tests

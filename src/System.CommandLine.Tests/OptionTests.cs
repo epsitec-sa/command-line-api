@@ -2,9 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.CommandLine.Parsing;
-using FluentAssertions;
+using AwesomeAssertions;
 using System.Linq;
-using FluentAssertions.Execution;
+using AwesomeAssertions.Execution;
 using Xunit;
 
 namespace System.CommandLine.Tests

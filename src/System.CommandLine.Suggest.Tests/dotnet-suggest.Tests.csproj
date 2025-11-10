@@ -6,10 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\System.CommandLine.Suggest\DotnetMuxer.cs" Link="DotnetMuxer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AwesomeAssertions" />
   </ItemGroup>
 
@@ -20,7 +16,7 @@
     <!-- Sequence into build to make sure that publish assets are available for tests. -->
     <ProjectReference Include="EndToEndTestApp/EndToEndTestApp.csproj;
                                ../System.CommandLine.Suggest/dotnet-suggest.csproj"
-                      AdditionalProperties="SelfContained=false;RuntimeIdentifier=$(NETCoreSdkPortableRuntimeIdentifier);PublishDir=$(OutputPath)/TestAssets;PublishAfterBuild=true"
+                      AdditionalProperties="SelfContained=false;PublishDir=$(OutputPath)/TestAssets;PublishAfterBuild=true"
                       ReferenceOutputAssembly="false" />
   </ItemGroup>
 

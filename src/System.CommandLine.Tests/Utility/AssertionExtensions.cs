@@ -1,12 +1,12 @@
-﻿// Copyright (c) .NET Foundation and contributors. All rights reserved.
+// Copyright (c) .NET Foundation and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
-using FluentAssertions.Collections;
-using FluentAssertions.Execution;
-using FluentAssertions.Primitives;
+using AwesomeAssertions;
+using AwesomeAssertions.Collections;
+using AwesomeAssertions.Execution;
+using AwesomeAssertions.Primitives;
 
 namespace System.CommandLine.Tests.Utility;
 

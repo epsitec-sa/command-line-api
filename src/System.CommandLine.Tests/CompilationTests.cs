@@ -7,7 +7,7 @@ using System.CommandLine.Suggest;
 using System.CommandLine.Tests.Utility;
 using System.IO;
 using System.Text;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.DotNet.PlatformAbstractions;
 using Xunit;
 using Xunit.Abstractions;

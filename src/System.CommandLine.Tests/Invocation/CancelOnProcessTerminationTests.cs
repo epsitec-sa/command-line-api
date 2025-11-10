@@ -1,8 +1,8 @@
-﻿// Copyright (c) .NET Foundation and contributors. All rights reserved.
+// Copyright (c) .NET Foundation and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.CommandLine.Invocation;
-using FluentAssertions;
+using AwesomeAssertions;
 using System.CommandLine.Tests.Utility;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
